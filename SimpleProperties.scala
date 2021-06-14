@@ -37,5 +37,19 @@ class SimpleProperties {
   }
 }
 
+
+def maximum(numb:String, listeNumb:Array[String]) : Boolean = {
+   var a = 0
+   var isMax:Boolean = false;
+   for(a <- 0 to (listeNumb.size - 1)){
+      if(listeNumb(a) >numb){
+         isMax = false;
+      }else{
+         isMax = true;
+      }
+   }
+   return(isMax)
+ }
+
 val inst: SimpleProperties = new SimpleProperties();
 printf("" + inst.minLength("Hello", 8));
