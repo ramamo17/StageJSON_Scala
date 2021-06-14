@@ -15,7 +15,7 @@ class SimpleProperties {
     }
   }
   
-  def mutipleOf(numb:String, mutiple:Int) : Boolean = {
+  def mutipleOf(numb:Int, multiple:Int) : Boolean = {
     if(numb%multiple==0){
       return(true)
     }else{
@@ -23,7 +23,7 @@ class SimpleProperties {
     }
   }
 
-  def minimum(numb:String, listeNumb:Array) : Boolean = {
+  def minimum(numb:String, listeNumb:Array[String]) : Boolean = {
    var a = 0
    var isMin:Boolean = false;
    for(a <- 0 to (listeNumb.size - 1)){
