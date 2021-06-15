@@ -1,6 +1,6 @@
 class SimpleProperties {
   def minLength(word:String, minNumber:Int) : Boolean = {
-    if(word.length < minNumber){
+    if(word.length <= minNumber){
       return(false)
     }else{
       return(true)
@@ -8,7 +8,7 @@ class SimpleProperties {
   }
   
   def maxLength(word:String, maxNumber:Int) : Boolean = {
-    if(word.length > maxNumber){
+    if(word.length >= maxNumber){
       return(false)
     }else{
       return(true)
@@ -37,6 +37,26 @@ class SimpleProperties {
   }
 }
 
+def minimumExclusive(item:Array[Int]) : Int = {
+  var r = item(0)
+  for (x <- item){
+    if (x<r){
+      r = x
+    }
+  }
+  return r
+}
+
+def maximumExclusive(item:Array[Int]) : Int = {
+  var r = item(0)
+  for (x <- item){
+    if (x>r){
+      r = x
+    }
+  }
+  return r
+}
+
 
 def maximum(numb:String, listeNumb:Array[String]) : Boolean = {
    var a = 0
@@ -50,6 +70,13 @@ def maximum(numb:String, listeNumb:Array[String]) : Boolean = {
    }
    return(isMax)
  }
+
+def contains ( item:Array[String]) : Boolean = {
+  for ( x <- item){
+    if (x == true) return true
+  }
+  return false
+}
 
 val inst: SimpleProperties = new SimpleProperties();
 printf("" + inst.minLength("Hello", 8));
