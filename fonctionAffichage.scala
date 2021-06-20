@@ -35,18 +35,22 @@ val jsonString ="""
 }
 """
 // json is a JValue instance
+
 val json = parse(jsonString)
 val elements = (json).children
 println(json)
+println(json.children)
 println(elements.head)
 //for (acct <- elements) {
 //val m = acct.extract[EmailAccount]
 //println(s"Account: ${m.url}, ${m.username}, ${m.password}")
 //println(" Users: " + m.usersOfInterest.mkString(","))
 //}
-/*def affichage(doc:List): String = doc match{
+def affichage(doc:List[Any]): String = doc match{
   case _:JString => println(doc)
-  case_:List => print("nouv truc"), affichage
-  case_:JField => println
-}*/
+  case_:List[Any] => println("Liste :     ") + affichage(doc.head) + affichage(doc.tail)
+  case_:JField => println("JField : ") + affichage(doc.children)
+  case_:JArray => println ("JArray : ") + affichage(doc.children)
+  case_:JObject =>println("JObject : ") + affichage(doc.children)
+}
 }
