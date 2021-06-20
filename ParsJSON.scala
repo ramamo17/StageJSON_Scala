@@ -1,54 +1,61 @@
+import net.liftweb.json.DefaultFormats
 import net.liftweb.json._
 
-implicit val formats = DefaultFormats // Brings in default date formats etc.
+object ParseJsonArray extends App {
+    implicit val formats = DefaultFormats
 
-case class LongitudeC(typeOf:String, minimum:Int, maximum:Int)
-case class LatitudeC(typeOf:String, minimum:Int, maximum:Int)
-case class Properties(latitude:LatitudeC, longitude:LongitudeC)
-case class Geography(title:String, desciption:String, required:List[String], typeOf:String, properties:Properties)
+    // a JSON string that represents a list of EmailAccount instances
+    val jsonString ="""
+    {
+      "accounts": [
+    { "emailAccount": {
+      "accountName": "YMail",
+      "username": "USERNAME",
+      "password": "PASSWORD",
+      "url": "imap.yahoo.com",
+      "minutesBetweenChecks": 1,
+      "usersOfInterest": ["barney", "betty", "wilma"],
+      "type" : "String"
+    }},
+    { "emailAccount": {
+      "accountName": "Gmail",
+      "username": "USER",
+      "password": "PASS",
+      "url": "imap.gmail.com",
+      "minutesBetweenChecks": 1,
+      "usersOfInterest": ["pebbles", "bam-bam"],
+      "type" : "String"
+    }}]}
+    """
 
-val json = parse("""
-         {
-            "title": "Longitude and Latitude Values",
-            "description": "A geographical coordinate.",
-            "required": [ "latitude", "longitude" ],
-            "typeOf": "object",
-            "properties": {
-               "latitude": {
-                  "typeOf": "number",
-                  "minimum": -90,
-                  "maximum": 90
-               },
-               "longitude": {
-                  "typeOf": "number",
-                  "minimum": -180,
-                  "maximum": 180
-               }
-            }
-         }
-       """)
-
-json.extract[Geography] 
-
-/*
-Based on this JSON schema
-{
-  "title": "Longitude and Latitude Values",
-  "description": "A geographical coordinate.",
-  "required": [ "latitude", "longitude" ],
-  "type": "object",
-  "properties": {
-    "latitude": {
-      "typeOf": "number",
-      "minimum": -90,
-      "maximum": 90
-    },
-    "longitude": {
-      "typeOf": "number",
-      "minimum": -180,
-      "maximum": 180
+    def parsingJSON(json:String) : List[Any] = {
+      // json is a JValue instance
+      val json = parse(jsonString)
+      val elements = (json).children
+      return(elements)
     }
-  }
-}
+  
+    println(parsingJSON(jsonString))
+  
+    def browseList(listData : Any) : Any = {
 
-*/
+      if(listData.isInstanceOf[List[Any]] == true){
+        return(listData)
+      }else if (listData.isInstanceOf[JArray] == true){
+        return(listData)
+      }else if (listData.isInstanceOf[JObject] == true){
+        return(browseList(listData(0)))
+      }else if (listData.isInstanceOf[JField] == true){
+        return(browseList(listData(0)))
+      }else if (listData.isInstanceOf[JString] == true){
+        return(browseList(listData(0)))
+      }
+      
+    }
+  
+    println(browseList(parsingJSON(jsonString)))
+  
+    
+  
+  
+}
