@@ -35,22 +35,30 @@ val jsonString ="""
 }
 """
 // json is a JValue instance
-
-val json = parse(jsonString)
+println(jsonString)
+val json = parse(jsonString) // on doit itt sur les JField
 val elements = (json).children
-println(json)
-println(json.children)
-println(elements.head)
+println(json.isInstanceOf[JObject])
+  
+//println(json.children.tail)
+//println(elements)
 //for (acct <- elements) {
 //val m = acct.extract[EmailAccount]
 //println(s"Account: ${m.url}, ${m.username}, ${m.password}")
 //println(" Users: " + m.usersOfInterest.mkString(","))
 //}
-def affichage(doc:List[Any]): String = doc match{
-  case _:JString => println(doc)
-  case_:List[Any] => println("Liste :     ") + affichage(doc.head) + affichage(doc.tail)
-  case_:JField => println("JField : ") + affichage(doc.children)
-  case_:JArray => println ("JArray : ") + affichage(doc.children)
-  case_:JObject =>println("JObject : ") + affichage(doc.children)
-}
+def test(v:JValue): Unit ={ v match {
+  case JValue => println(v)
+} 
+}       
+  
+test(json)
+
+/*def affichage(doc:Any): String = doc match{
+  case doc:JString => println("Jstring")
+  case doc:List[Any] => println("Liste") + affichage(doc.head) + affichage(doc.tail)
+  case doc:JField => println("JField : ") + affichage(doc.children)
+  case doc:JArray => println ("JArray : ") + affichage(doc.children)
+  case doc:JObject =>println("JObject : ") + affichage(doc.children) // une boucle sur la liste de JField qui est dedans
+}*/
 }
