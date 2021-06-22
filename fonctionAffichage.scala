@@ -63,3 +63,5 @@ test(json)
 }*/
 }
 //https://stackoverflow.com/questions/21214561/json-parsing-in-scala-with-scala-util-parsing-json
+
+//https://stackoverflow.com/questions/60909578/parse-json-and-based-on-value-return-a-list-of-keys
