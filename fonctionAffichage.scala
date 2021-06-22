@@ -62,3 +62,4 @@ test(json)
   case doc:JObject =>println("JObject : ") + affichage(doc.children) // une boucle sur la liste de JField qui est dedans
 }*/
 }
+//https://stackoverflow.com/questions/21214561/json-parsing-in-scala-with-scala-util-parsing-json
