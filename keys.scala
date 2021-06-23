@@ -53,4 +53,6 @@ def reckeys(json: Json): Vector[String] = {
   go(Vector(json), Vector.empty)
 }
 
+val res = parse(raw).map(keys)
 println(parse(raw).map(reckeys))
+
