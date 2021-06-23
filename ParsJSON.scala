@@ -35,28 +35,31 @@ object ParseJsonArray extends App {
   abstract class DocumentJSON
   case class ListTy(body: List[Any]) extends DocumentJSON
   case class JObjTy(body: JObject) extends DocumentJSON
-  case class JstringTy(body: JString) extends DocumentJSON
+  case class JStringTy(body: JString) extends DocumentJSON
   case class JFieldTy(body: JField) extends DocumentJSON
-  case class JArray(body: JArray) extends DocumentJSON
+  case class JArrayTy(body: JArray) extends DocumentJSON
+  case class JIntTy(body: JInt) extends DocumentJSON
 
   def paternMatch(elementMatch: DocumentJSON): String = {
     elementMatch match {
       case ListTy(body)    => s"List : " + {for { valueList <- body } {
-        if(valueList.isInstanceOf[JObject]){println(valueList); paternMatch(new JObjTy(valueList))}
-        else if(valueList.isInstanceOf[JString]){paternMatch(new JstringTy(valueList))}
-        else if(valueList.isInstanceOf[JField]){paternMatch(new JFieldTy(valueList))}
-        else if(valueList.isInstanceOf[JArray]){paternMatch(new JArray(valueList))}
+        if(valueList.isInstanceOf[JObject]){print(paternMatch(new JObjTy(valueList.asInstanceOf[JObject])))}
+        else if(valueList.isInstanceOf[JString]){print(paternMatch(new JStringTy(valueList.asInstanceOf[JString])))}
+        else if(valueList.isInstanceOf[JField]){print(paternMatch(new JFieldTy(valueList.asInstanceOf[JField])))}
+        else if(valueList.isInstanceOf[JArray]){print(paternMatch(new JArrayTy(valueList.asInstanceOf[JArray])))}
+        else if(valueList.isInstanceOf[JInt]){print(paternMatch(new JIntTy(valueList.asInstanceOf[JInt])))}
       }}
-      case JObjTy(body)    => s"JObj"
-      case JstringTy(body) => s"String"
-      case JFieldTy(body)  => s"Field"
-      case JArray(body)    => s"Array"
+      case JObjTy(body)    => s"Object : " + println("    " + paternMatch(new ListTy(body.children)))
+      case JStringTy(body) => s"String : " + println("    " + body.extract[String])
+      case JFieldTy(body)  => s"Field : " + println(body.name + " " + body.value)
+      case JArrayTy(body)  => s"Array : " + println("   " + paternMatch(new ListTy(body.children)))
+      case JIntTy(body)    => s"Int : " + println(body.values)
     }
   }
 
   val someDoc = ListTy(elements)
 
-  println(paternMatch(someDoc))
+  print(paternMatch(someDoc))
 
 
 }
