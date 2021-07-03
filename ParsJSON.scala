@@ -27,7 +27,8 @@ object ParseJsonArray extends App {
 }
 """
 
-  var jsonParse = json.asInstanceOf[JObject].values;
+  var jsonParse = parse(json).asInstanceOf[JObject].values;
+  print(jsonParse)
   
   def functionUnList(listPara:List[Any]) : Unit = {
     listPara.foreach {
@@ -51,5 +52,5 @@ object ParseJsonArray extends App {
   functionUnMap(jsonParse)
 
 
-}
 
+}
